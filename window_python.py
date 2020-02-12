@@ -62,11 +62,8 @@ class App_button(Label):
 		else:
 			self.configure(fg = 'blue')							#Изменение цвета кнопки при отпускании
 
-#Функция создания главного окна
-def main():
-	main_window = Tk()											#Создание окна
-	print("Hello")
-	main_frame = App_frame(main_window)							#Создание главного фрейма внутри главного окна
+#Конфигурация главного окна
+def make_window(main_frame):
 	top_frame = Frame(main_frame, bg = 'white')					#Создание верхнего фрейма
 	top_frame.pack(side = TOP, fill = BOTH)						#Размещение верхнего фрейма в главном
 	quit_button = App_button(top_frame,\
@@ -76,6 +73,12 @@ def main():
 	middle_frame.pack(side = TOP, fill = BOTH, expand = 1)		#Размещение среднего фрейма в главном
 	bottom_frame = Frame(main_frame, bg = 'red')				#Создание нижнего фрейма
 	bottom_frame.pack(side = TOP, fill = BOTH, expand = 1)		#Размещение нижнего фрейма в главном
+
+#Функция создания главного окна
+def main():
+	main_window = Tk()											#Создание окна
+	main_frame = App_frame(main_window)							#Создание главного фрейма внутри главного окна
+	make_window(main_frame)
 	main_window.mainloop()										#Основной цикл
 
 #Первичная инициализация программы

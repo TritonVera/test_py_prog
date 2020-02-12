@@ -1,17 +1,18 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-PyObject *p_name, *p_module, *p_dict;
+PyObject *p_name, *p_module, *p_dict, *p_func;
 PyObject *python_start() {
 
+	Py_SetProgramName("window_python");
 	Py_Initialize();
 
-	/*do {
+	do {
 		// Загрузка модуля sys
         PyObject *sys = PyImport_ImportModule("sys");
         PyObject *sys_path = PyObject_GetAttrString(sys, "path");
         // Путь до наших исходников Python
-        PyObject *folder_path = PyUnicode_FromString((const char*) "./src/python");
+        PyObject *folder_path = PyUnicode_FromString((const char*) ".");
         PyList_Append(sys_path, folder_path);
 
 		//Перевод С строки в python unicode строку
@@ -32,14 +33,20 @@ PyObject *python_start() {
 			break;
 		}
 
+		//Извлечение функции main
+		p_func = PyDict_GetItemString(p_dict, "main");
+		if (!p_func) {
+			break;
+		}
+
 		Py_XDECREF(sys);
 		Py_XDECREF(sys_path);
 		Py_XDECREF(folder_path);
-		return p_dict;
+		return p_func;
 	} while(0);
 
 	PyErr_Print();			//Печать ошибки в случае неудачи
-	return 0;*/
+	return 0;
 }
 
 void python_clear() {
@@ -52,13 +59,12 @@ void python_clear() {
 	Py_Finalize();
 }
 
-int main() {
-	FILE *p_file = fopen("window_python.py", "r");
+int main(int argc, char *argv[]) {
 	python_start();
-	PyRun_SimpleFile(p_file, "window_python");
-	///if (!python_start()) {
-	///	return -1;
-	///}
+	if (!python_start()) {
+		return -1;
+	}
+	PyObject_CallObject(p_func, NULL);
 	python_clear();
 	return 0;
 }
