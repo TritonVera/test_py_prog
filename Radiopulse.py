@@ -1,5 +1,4 @@
 import math
-import matplotlib.pyplot as plot
 
 #point_list
 
@@ -12,8 +11,9 @@ class Radiopulse():
 		self.frequency = frequency
 		self.points = self.gen_signal()
 
-	def gen_signal(self, step = 0.001, end_time = 10.0):
+	def gen_signal(self, step = 0.001, end_time = 150.0):
 		#print(self.time_step(0.0, step, end_time))
+		self.xpoints = self.time_step(0.0, step, end_time)
 		point = []
 		for time in self.time_step(0.0, step, end_time):
 			in_time = time
@@ -40,6 +40,7 @@ class Radiopulse():
 		while point < end:
 			point += step
 			rang.append(point)
+
 		return rang
 		
 
@@ -53,16 +54,15 @@ def main():
 	 % (length_pulse, frequency))
 	radiopulse = Radiopulse(length_pulse, period_pulse, number_pulse,\
 	 period_packet, frequency) 
-	make_plot(radiopulse.points)
+	return radiopulse.points, radiopulse.xpoints
 
 def garmonic(tm, freq, amp = 1.0, phs = 0.0):
 	signal = amp * math.sin((2 * math.pi * freq * tm) + phs)
-	print(signal)
 	return signal
 
-def make_plot(point):
+def make_plot(xpoint, point):
 	fig = plot.figure()
-	plot.plot(point)
+	plot.plot(xpoint, point)
 	plot.show()
 
 #Первичная инициализация программы
