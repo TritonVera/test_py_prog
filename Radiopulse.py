@@ -9,26 +9,30 @@ class Radiopulse():
 		self.number = number
 		self.period_packet = period_packet
 		self.frequency = frequency
-		self.points = self.gen_signal()
+		self.Ipoints, self.Qpoints = self.gen_signal()
 
 	def gen_signal(self, step = 0.001, end_time = 150.0):
 		#print(self.time_step(0.0, step, end_time))
 		self.xpoints = self.time_step(0.0, step, end_time)
-		point = []
+		pointI = []
+                pointQ = []
 		for time in self.time_step(0.0, step, end_time):
 			in_time = time
 			while in_time > self.period_packet:
 				in_time = in_time - self.period_packet
 			if in_time > (self.number * self.period_pulse):
-				point.append(0)
-			else:
+				pointI.append(0)
+				pointQ.append(0)
+                        else:
 				while in_time > self.period_pulse:
 					in_time = in_time - self.period_pulse
 				if in_time > self.length:
-					point.append(0)
+					pointI.append(0)
+                                        pointQ.append(0)
 				else:
-					point.append(garmonic(in_time, self.frequency))
-		return point
+					pointI.append(garmonic(in_time, self.frequency))
+                                        pointQ.append(garmonic(in_time, self.frequency, phs = math.pi/2))
+		return pointI, pointQ
 
 	def send_test(self):
 		print("I am working")
@@ -54,7 +58,7 @@ def main():
 	 % (length_pulse, frequency))
 	radiopulse = Radiopulse(length_pulse, period_pulse, number_pulse,\
 	 period_packet, frequency) 
-	return radiopulse.points, radiopulse.xpoints
+	return radiopulse.Ipoints, radiopulse.xpoints
 
 def garmonic(tm, freq, amp = 1.0, phs = 0.0):
 	signal = amp * math.sin((2 * math.pi * freq * tm) + phs)
