@@ -21,7 +21,7 @@ class window(QMainWindow):
 		self.main_widget = widget()						#Создание центрального виджета
 		self.setCentralWidget(self.main_widget)			#Установка в главное окно
 
-		self.setGeometry(300, 300, 250, 150)			#Параметры размеров окна
+		self.setGeometry(300, 300, 400, 400)			#Параметры размеров окна
 		self.setWindowTitle('Проект Родина')
 
 
@@ -39,15 +39,15 @@ class widget(QWidget):
 
 	def init_widget(self):
 		#Строки ввода
-		self.frequence_line = QLineEdit(self)
-		self.length_line = QLineEdit(self)
+		#self.frequence_line = QLineEdit(self)
+		#self.length_line = QLineEdit(self)
 
 		#Объекты отображения
-		self.signal_plot = PlotCanvas(self, width = 5, height = 4)
+		self.signal_plot = PlotCanvas(self, width = 3, height = 3)
 
 		#Работа и размещение объекта отображения
-		self.frequence_line.move(100,50)
-		self.length_line.move(100,80)
+		#self.frequence_line.move(100,50)
+		#self.length_line.move(100,80)
 
 		#Кнопки
 		quit_button = QPushButton("Выход", self)
@@ -56,8 +56,9 @@ class widget(QWidget):
 		work_button.clicked.connect(self.Start_button)
 
 		#Размещение кнопок на поле
+		#print(self.availableGeometry().center())
 		quit_button.move(100, 0)
-		self.signal_plot.move(0, 0)
+		self.signal_plot.move(0, quit_button.height())
 
 	def Start_button(self):
 		y_points, x_points = Radiopulse.main()   #Извлечение координат точек сигнала
@@ -65,6 +66,7 @@ class widget(QWidget):
 
 
 class PlotCanvas(FigureCanvas):
+	#Изициализация фигуры
     def __init__(self, parent = None, width = 5, height = 4, dpi = 100):
         fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = fig.add_subplot(111)
@@ -78,7 +80,6 @@ class PlotCanvas(FigureCanvas):
     def plot(self, y_point):
         ax = self.figure.add_subplot(111)
         ax.plot(y_point, 'r-')
-        ax.set_title('PyQt Matplotlib Example')
         self.draw()
 
 
