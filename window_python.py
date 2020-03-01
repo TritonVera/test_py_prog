@@ -7,7 +7,7 @@ import Radiopulse
 #Создание нового класса похожего на Frame
 class App_frame(Frame):
 	def __init__(self, parent):
-		Frame.__init__(self, parent, background = "black")		#Инициализация главного Frame 
+		Frame.__init__(self, parent, background = "black")		#Инициализация главного Frame
 		self.parent = parent									#Присвоение методу parent главного фрейма переданного значения parent
 		self.parent.title("Hello")								#Установка имени главного окна
 		self.center_window()									#Вызов функции центрирования окна
@@ -29,7 +29,7 @@ class App_frame(Frame):
 #Создание класса кнопки из Label (для стилизовки)
 class App_button(Label):
 	#Инициализация главного Label
-	def __init__(self, parent, txt_btn, cmd_btn = "None"):				 
+	def __init__(self, parent, txt_btn, cmd_btn = "None"):
 		Label.__init__(self, parent, text = txt_btn,\
 		  fg = 'blue')
 		self.parent = parent									#Сохранение ссылки на родителя

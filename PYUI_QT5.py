@@ -66,10 +66,10 @@ class widget(QWidget):
 
 
 class PlotCanvas(FigureCanvas):
-	#Изициализация фигуры
+	#Инициализация фигуры
     def __init__(self, parent = None, width = 5, height = 4, dpi = 100):
         fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
+        self.axes = fig.add_subplot(111)      #Рисует оси
 
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
@@ -89,9 +89,7 @@ def main():
 
 	wnd = window()					#Генерация окна методами класса window
 	wnd.show()						#Запуск показа окна
-	wnd.center()					#Установка окна в центр
-	#print("Ширина окна: %d, Отступ: %d" %(wnd.main_widget.width(), wnd.main_widget.width()\
-	# - wnd.main_widget.quit_button.width()))
+
 
 	sys.exit(app.exec_())
 
